@@ -1,120 +1,75 @@
-# 响应组件
-
-##介绍
-Request服务是用于获取请求数据与对请求终端设备进行判断的服务。 
-
-> 使用 Request 组件前必须先行配置 [Session组件](https://github.com/houdunwang/session) 与 [Cookie组件](https://github.com/houdunwang/cookie),请参考GitHub文档进行参考
+# 购物车
+##简介
+为了便于商城系统的开发提供了完善的购物车处理类，使商城购物车处理更加方便快捷，程序员只需要专注业务流程而不用关注实现步骤，大大增加了开发效率。
 
 [TOC]
 
-#开始使用
-
-####安装组件
+##安装
 使用 composer 命令进行安装或下载源代码使用。
+
 ```
-composer require houdunwang/request
+composer require houdunwang/cart
 ```
 > HDPHP 框架已经内置此组件，无需要安装
 
-####启动组件
-```
-\houdunwang\request\Request::bootstrap();
+
+##操作
+####添加购物车
+
+添加购物车使用 \houdunwang\cart\Cart::add() 方法实现，购物车中的数据会写入到 $_SESSION 超全局数组中。
+
 ```
 
-####常量定义
-组件会定义一些常量
-```
-IS_GET      GET请求
-IS_POST     POST请求
-IS_DELETE   DELETE请求
-IS_PUT      PUT请求
-IS_AJAX     异步请求
-IS_WECHAT   微信客户端请求
-__URL__     当前请求完整URL
-__HISTORY__ 来源地址
-```
-
-####获取数据
-query 方法支持点语法操作，支持多层数据获取。第一个字符为数据类型。
-```
-Request::query('post.data.id');
+$data = [ 
+	'id' 		=> 1, // 商品 ID 
+	'name'		=>' 后盾网 PHP 视频教程光盘 ',// 商品名称 
+	'num' 		=> 2, // 商品数量 
+	'price' 	=> 988, // 商品价格 
+	'options'   => []// 其他参数如价格、颜色、可以为数组或字符串 
+	'color' 	=> 'red', 
+	'size' 	    => 'L' 
+]; 
+\houdunwang\cart\Cart::add($data); // 添加到购物车 
+p($_SESSION); 
 ```
 
-####不存在时返回默认值
-返回默认值指当数据不存在时返回设置的值，并不会更改原数据。
-以下示例当 $_GET['id']不存在时返回默认值9
+####更新购物车
+更新购物车需要传入商品的唯一 SID，同时传入更新的商品数量，
 ```
-Request::query('get.id',9);
-```
-
-####对数据函数处理
-query 方法的第三个参数是一个函数名组成的数组，将对获取的数据通过函数进行处理后返回。
-```
-Request::query('get.id',0,['intval','trim']);
+$data=array( 
+	'sid'=>'4d854bc6',// 唯一 sid，添加购物车时自动生成 
+	'num'=>88 
+); 
+\houdunwang\cart\Cart::update($data); 
 ```
 
-####根据类型获取
-系统支持使用 get,post,request,server,session,cookie,global获取同名的php全局变量数据。
-
-#####获得所有 $_GET 数据
+####购物车中商品数据
 ```
-Request::get('cid',0,'intval'); 
-//获取$_GET['cid']值 ，存在时使用intval函数处理，不存在时定义为0
+\houdunwang\cart\Cart::getGoods(); 
 ```
 
-#####获得所有 $_POST 数据
+####购物车所有商品数据
 ```
-Request::post(); 
-```
-
-#####获得POST变量并对数据执行函数处理
-```
-Request::post('webname',NULL,['htmlspecialchars','strtoupper']); 
+\houdunwang\cart\Cart::getAllData(); 
 ```
 
-#####获得POST变量, 不存时返回默认值
+####清空购物车
+
 ```
-Request::post('webname','后盾网'); 
+\houdunwang\cart\Cart::flush(); 
 ```
 
-#####获得 $_SESSION['uid'] 值，并执行intval方法
+####获得商品总价格
 ```
-Request::session('uid',0,'intval'); 
-```
-
-#####获得 $_COOKIE['cart'] 值
-```
-Request::cookie('cart'); 
+echo \houdunwang\cart\Cart::getTotalPrice();
 ```
 
-####设置
-使用set 方法可以为$_GET,$_POST,$_REQUEST,$_SERVER设置数据，支持点语法设置多层数据，第一个参数为数据类型。
-以下代码设置GET['a']['b'] 变量为后盾人
+####统计购物车中的商品数量
 ```
-Request::set('get.a.b','后盾人');
+\houdunwang\cart\Cart::getTotalNums(); 
 ```
 
-####获取客户端IP地址
+####获得定单号\houdunwang\cart\Cart::getOrderId()
 ```
-Request::ip();
-```
-
-####https请求检测
-```
-Request::isHttps();
-```
-
-####判断是否为手机访问
-```
-Request::isMobile();
-```
-
-####检测是否为微信客户端
-```
-Request::isWeChat();
-```
-
-####判断请求来源是否为本站域名
-```
-Request::isDomain();
+\houdunwang\cart\Cart::getOrderId();
 ```
