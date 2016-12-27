@@ -1,12 +1,9 @@
 # 购物车
 ##简介
 为了便于商城系统的开发提供了完善的购物车处理类，使商城购物车处理更加方便快捷，程序员只需要专注业务流程而不用关注实现步骤，大大增加了开发效率。
-
 [TOC]
-
 ##安装
 使用 composer 命令进行安装或下载源代码使用。
-
 ```
 composer require houdunwang/cart
 ```
@@ -15,11 +12,8 @@ composer require houdunwang/cart
 
 ##操作
 ####添加购物车
-
 添加购物车使用 \houdunwang\cart\Cart::add() 方法实现，购物车中的数据会写入到 $_SESSION 超全局数组中。
-
 ```
-
 $data = [ 
 	'id' 		=> 1, // 商品 ID 
 	'name'		=>' 后盾网 PHP 视频教程光盘 ',// 商品名称 
@@ -30,7 +24,7 @@ $data = [
 	'size' 	    => 'L' 
 ]; 
 \houdunwang\cart\Cart::add($data); // 添加到购物车 
-p($_SESSION); 
+print_r($_SESSION); 
 ```
 
 ####更新购物车
