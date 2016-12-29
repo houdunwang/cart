@@ -9,9 +9,10 @@
  * '-------------------------------------------------------------------*/
 namespace houdunwang\cart;
 
-use hdphp\kernel\ServiceFacade;
 
-class CartFacade extends ServiceFacade {
+use houdunwang\framework\build\Facade;
+
+class CartFacade extends Facade {
 	public static function getFacadeAccessor() {
 		return 'Cart';
 	}

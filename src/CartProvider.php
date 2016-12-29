@@ -9,9 +9,9 @@
  * '-------------------------------------------------------------------*/
 namespace houdunwang\cart;
 
-use hdphp\kernel\ServiceProvider;
+use houdunwang\framework\build\Provider;
 
-class CartProvider extends ServiceProvider {
+class CartProvider extends Provider {
 
 	//延迟加载
 	public $defer = true;
@@ -20,8 +20,8 @@ class CartProvider extends ServiceProvider {
 	}
 
 	public function register() {
-		$this->app->single( 'Cart', function ( $app ) {
-			return new Cart( $app );
+		$this->app->single( 'Cart', function (  ) {
+			return new Cart(  );
 		} );
 	}
 }
