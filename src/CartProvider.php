@@ -20,8 +20,8 @@ class CartProvider extends Provider {
 	}
 
 	public function register() {
-		$this->app->single( 'Cart', function (  ) {
-			return new Cart(  );
+		$this->app->single( 'Cart', function () {
+			return new Cart();
 		} );
 	}
 }
