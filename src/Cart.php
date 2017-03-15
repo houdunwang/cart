@@ -8,6 +8,7 @@
  * | Copyright (c) 2012-2019, www.houdunwang.com. All Rights Reserved.
  * '-------------------------------------------------------------------*/
 namespace houdunwang\cart;
+use houdunwang\cart\build\Base;
 
 /**
  * 购物车处理类
@@ -20,7 +21,7 @@ class Cart {
 
 	//更改缓存驱动
 	protected function driver() {
-		$this->link = new Query( $this );
+		$this->link = new Base( $this );
 
 		return $this;
 	}
